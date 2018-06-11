@@ -1,0 +1,377 @@
+CREATE TABLE `atención` (
+  `ID` int(11) NOT NULL,
+  `Fecha` date DEFAULT NULL,
+  `Hora` time DEFAULT NULL,
+  `Detalle` varchar(100) DEFAULT NULL,
+  `ID_servicio` int(11) DEFAULT NULL,
+  `Rut` char(15) DEFAULT NULL,
+  `Rut_E` char(15) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELACIONES PARA LA TABLA `atención`:
+--   `ID_servicio`
+--       `servicio` -> `ID`
+--   `Rut`
+--       `clientes` -> `Rut`
+--   `Rut_E`
+--       `empleado` -> `Rut`
+--
+
+--
+-- Volcado de datos para la tabla `atención`
+--
+
+INSERT INTO `atención` (`ID`, `Fecha`, `Hora`, `Detalle`, `ID_servicio`, `Rut`, `Rut_E`) VALUES
+(1, '2017-12-28', '21:00:00', NULL, 408, '12587456-k', '11593785-5'),
+(2, '2018-01-15', '12:00:00', NULL, 109, '19336587-1', '13475965-1');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `clientes`
+--
+
+CREATE TABLE `clientes` (
+  `Rut` char(15) NOT NULL,
+  `Nombre1` char(15) NOT NULL,
+  `Nombre2` char(15) NOT NULL,
+  `Apellido1` char(15) NOT NULL,
+  `Apellido2` char(15) NOT NULL,
+  `Fono` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELACIONES PARA LA TABLA `clientes`:
+--
+
+--
+-- Volcado de datos para la tabla `clientes`
+--
+
+INSERT INTO `clientes` (`Rut`, `Nombre1`, `Nombre2`, `Apellido1`, `Apellido2`, `Fono`) VALUES
+('10996587-4', 'Carlos', 'Antonio', 'Muñoz', 'Soto', 98746926),
+('1157893-5', 'Raul', 'Ignacio', 'Martel', 'Sotomayor', 2587863),
+('11587635-2', 'Igor', 'Emilio', 'Bahamondez', 'Reyes', 87963125),
+('12587456-k', 'Javiera', 'Alejandra', 'Moscoso', 'Constanzo', 98765812),
+('15845161-5', 'Marcia', 'Andrea', 'Ramirez', 'Constanzo', 65116468),
+('15878645-3', 'Cesar', 'Andres', 'Luna', 'Martinez', 88799325),
+('16874922-5', 'Emilia', 'Antonia', 'San Martin', 'Oyarzun', 28775464),
+('17894896-5', 'Daniela', 'Antonia', 'Reyes', 'Sanhueza', 25859562),
+('18154115-7', 'Enzo', 'Marcelo', 'Figueroa', 'Rivas', 65787687),
+('18796229-1', 'Matias', 'Ignacio', 'Mendoza', 'Rios', 2651478),
+('19336587-1', 'Gabriela', 'Andrea', 'Perez', 'Pereira', 2651478);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `compra`
+--
+
+CREATE TABLE `compra` (
+  `Rut` char(15) NOT NULL,
+  `ID_producto` int(11) NOT NULL,
+  `Precio_venta` int(11) DEFAULT NULL,
+  `Fecha_venta` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELACIONES PARA LA TABLA `compra`:
+--   `Rut`
+--       `clientes` -> `Rut`
+--   `ID_producto`
+--       `productos` -> `ID`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `empleado`
+--
+
+CREATE TABLE `empleado` (
+  `Rut` char(15) NOT NULL,
+  `Nombre1` char(10) NOT NULL,
+  `Nombre2` char(10) NOT NULL,
+  `Apellido1` char(10) NOT NULL,
+  `Apellido2` char(10) NOT NULL,
+  `especialidad` char(30) DEFAULT NULL,
+  `Salario` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELACIONES PARA LA TABLA `empleado`:
+--
+
+--
+-- Volcado de datos para la tabla `empleado`
+--
+
+INSERT INTO `empleado` (`Rut`, `Nombre1`, `Nombre2`, `Apellido1`, `Apellido2`, `especialidad`, `Salario`) VALUES
+('10987458-9', 'Carolina', 'Andrea', 'Rodriguez', 'Diaz', 'Masajes', 270000),
+('11593785-5', 'Claudia', 'Andrea', 'Garcia', 'Neira', 'Cosmetologia', 250000),
+('13475965-1', 'Daniela', 'Ignacia', 'Constanzo', 'Ramirez', 'Depilacion', 250000);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `productos`
+--
+
+CREATE TABLE `productos` (
+  `ID` int(11) NOT NULL,
+  `Ubicacion_bodega` char(30) DEFAULT NULL,
+  `Marca` char(20) DEFAULT NULL,
+  `Nombre` char(20) DEFAULT NULL,
+  `stock` int(11) DEFAULT NULL,
+  `Descripcion` char(50) DEFAULT NULL,
+  `precio_compra` int(11) DEFAULT NULL,
+  `fecha_compra` date DEFAULT NULL,
+  `ID_proveedor` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELACIONES PARA LA TABLA `productos`:
+--   `ID_proveedor`
+--       `proveedor` -> `ID`
+--
+
+--
+-- Volcado de datos para la tabla `productos`
+--
+
+INSERT INTO `productos` (`ID`, `Ubicacion_bodega`, `Marca`, `Nombre`, `stock`, `Descripcion`, `precio_compra`, `fecha_compra`, `ID_proveedor`) VALUES
+(1000, NULL, 'millefiori', 'Cera Depilatoria Nat', 15, 'Bolsa de 100gr.', 1340, '2018-03-15', 2),
+(1001, NULL, 'millefiori', 'Cera Depilatoria Veg', 20, 'Bolsa de 100gr.', 1390, '2018-03-15', 2),
+(2000, NULL, 'Levinia', 'Aceite Masaje Dermik', 2, 'Aceite de masaje que posee olor a nuez 100ml', 14900, '2018-04-06', 1),
+(3000, NULL, 'Thatso', 'Locion Autobronceant', 2, 'Loción Autobronceante 1 Lt', 49900, '2018-02-20', 1),
+(3001, NULL, 'l\'oreal', 'Autobronceante Piern', 4, 'AUTOBRONCEANTE PIERNAS 150ML BB LEGS', 7190, '2018-02-12', 2),
+(4000, NULL, 'Comfort Zone', 'Locion Tonificante', 3, 'Loción tonificante sin alcohol 200ml', 11900, '2018-03-15', 1),
+(4001, NULL, 'Cluny', 'Locion de Limpieza', 4, 'Locion de limpieza facial 250ml', 3590, '2018-03-15', 3),
+(4002, NULL, 'Cluny', 'Fluido Hidratante', 2, 'FLUIDO HIDRATANTE MATIFICANTE FACIAL 50ml', 4390, '2019-02-03', 3),
+(4003, NULL, 'Catrice', 'Pestañas una a una', 15, 'Con pegamento integrado.', 2390, '2017-04-15', 2),
+(4004, NULL, 'Ardell', 'Pestañas en cortina', 11, 'PESTAÑAS CURVY 411 NEGRA', 3990, '2018-02-15', 2),
+(4005, NULL, 'l\'oreal', 'Base infalible 230', 2, 'Base 24 hrs. 30 ml', 10190, '2018-04-03', 3),
+(4006, NULL, 'Petrizzio', 'Paleta Rose Gold', 1, '10 sombras mate', 5990, '2018-04-03', 3),
+(5000, NULL, 'Cell Skin', 'Quitaesmate', 4, 'Suave quitaesmalete 80ml', 1100, '2018-04-02', 3),
+(5001, NULL, 'Etienne', 'Base Esmalte', 2, 'Protectora y antioxidante', 1990, '2018-04-02', 3),
+(5002, NULL, 'Etienne', 'Esmalte Blanco', 2, 'Esmalte blanco xpert', 1990, '2018-05-04', 3),
+(5003, NULL, 'Etienne', 'Esmalte Berry', 1, 'Esmalte Berry xpert', 1990, '2018-02-15', 3),
+(5004, NULL, 'Etienne', 'Esmalte Beige', 4, 'Esmalte Beige xpert', 1990, '2018-04-02', 3),
+(6000, NULL, 'Simond\'s', 'Shampoo c.normal', 4, 'SHAMPOO 410 ML', 1350, '2018-02-04', 2),
+(6001, NULL, 'Simond\'s', 'Shampoo c.graso', 3, 'SHAMPOO 410 ML', 1350, '2018-04-02', 2),
+(6002, NULL, 'Simond\'s', 'Shampoo c.seco', 4, 'SHAMPOO 410 ML', 1350, '2018-02-04', 2),
+(6003, NULL, 'Simond´s', 'Acondicionador c.nor', 2, 'ACONDICIONADOR 410 ML', 1350, '2018-02-04', 2),
+(6004, NULL, 'Elgon', 'Decolorante', 2, 'Decolorantes Elgon 500 Gr', 11990, '2017-12-09', 1),
+(6005, NULL, 'Ilicit', 'Tint. castaño claro', 4, '47 gr #5/0', 2090, '2018-04-02', 2),
+(6006, NULL, 'Ilicit', 'Tint. negro', 3, '47 gr #1/0', 2090, '2018-04-03', 2),
+(6007, NULL, 'Ilicit', 'Tint. rubio claro', 2, '47 gr #8/0', 2090, '2018-02-04', 2),
+(6008, NULL, 'Ilicit', 'Tint. caoba', 4, '47 gr #4/45', 2090, '2018-02-04', 2),
+(6009, NULL, 'Garnier', 'Tint. chocolate', 3, '45 gr #6.7', 2190, '2018-04-03', 2),
+(6010, NULL, 'Garnier', 'Tint. castaño claro', 3, '45 gr #5.52', 2190, '2018-05-06', 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `proveedor`
+--
+
+CREATE TABLE `proveedor` (
+  `ID` int(11) NOT NULL,
+  `Direccion` char(50) DEFAULT NULL,
+  `Nombre` char(30) DEFAULT NULL,
+  `Telefono` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELACIONES PARA LA TABLA `proveedor`:
+--
+
+--
+-- Volcado de datos para la tabla `proveedor`
+--
+
+INSERT INTO `proveedor` (`ID`, `Direccion`, `Nombre`, `Telefono`) VALUES
+(1, 'Antonio Varas #725, Puerto Montt', 'Casa Pichara', 2385167),
+(2, 'Antonio Varas #834, Puerto Montt', 'Maicao', 28261627),
+(3, ' Urmeneta #580, Puerto Montt', 'PreUnic', 2351087);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `servicio`
+--
+
+CREATE TABLE `servicio` (
+  `ID` int(11) NOT NULL,
+  `Nombre` char(30) DEFAULT NULL,
+  `Precio` int(11) DEFAULT NULL,
+  `Tiempo_promedio` time DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- RELACIONES PARA LA TABLA `servicio`:
+--
+
+--
+-- Volcado de datos para la tabla `servicio`
+--
+
+INSERT INTO `servicio` (`ID`, `Nombre`, `Precio`, `Tiempo_promedio`) VALUES
+(100, 'Rebaje Largo', 6500, '00:30:00'),
+(101, 'Rebaje Completo', 10500, '00:45:00'),
+(102, 'Depilacion Pelvis', 10500, '00:45:00'),
+(103, 'Rebaje Simple', 5500, '00:30:00'),
+(104, 'Depilacion Abdomen', 6000, '00:30:00'),
+(105, 'Depilacion Axila', 4500, '00:20:00'),
+(106, 'Depilacion Brazo', 6500, '00:30:00'),
+(107, 'Depilacion Dedos', 3000, '00:15:00'),
+(108, 'Depilacion Espalda', 7500, '00:45:00'),
+(109, 'Depilacion Gluteos', 5500, '00:30:00'),
+(110, 'Depilacion Pierna', 9500, '00:30:00'),
+(111, 'Depilacion Cara', 10500, '00:45:00'),
+(112, 'Depilacion Cejas', 4000, '00:30:00'),
+(113, 'Depilacion Bozo', 3500, '00:15:00'),
+(114, 'Depilacion Frente', 4000, '00:15:00'),
+(115, 'Depilacion Menton', 5500, '00:30:00'),
+(116, 'Depilacion Patilla', 3500, '00:15:00'),
+(117, 'Depilacion Nariz', 3000, '00:10:00'),
+(200, 'Masaje Relajacion', 15000, '01:00:00'),
+(201, 'Masaje Descontracturante', 18000, '01:00:00'),
+(202, 'Masaje Completo', 31000, '01:30:00'),
+(203, 'Masaje Reduccion', 25000, '01:00:00'),
+(204, 'Sauna', 6000, '01:00:00'),
+(300, 'Bronceado Rostro', 4000, '00:30:00'),
+(301, 'Bronceado Brazo', 6000, '00:30:00'),
+(302, 'Bronceado media pierna', 8000, '00:45:00'),
+(303, 'Bronceado Pierna Completa', 13000, '00:45:00'),
+(304, 'Bronceado Escote y Rostro', 8000, '00:45:00'),
+(305, 'Bronceado Cuerpo Completo', 26000, '01:30:00'),
+(306, 'Bronceado Escote', 5000, '00:30:00'),
+(400, 'Limpieza Facial Profunda', 24800, '01:00:00'),
+(401, 'Limpieza de Espalda', 32800, '00:45:00'),
+(402, 'Permanente Pestañas', 14800, '00:45:00'),
+(403, 'Permanente Pestañas y Tinte', 16700, '01:00:00'),
+(404, 'Pestañas Postizas una a una', 23500, '01:00:00'),
+(405, 'Pestañas Postizas Cortina', 19500, '00:30:00'),
+(406, 'Perfilado de Cejas', 5000, '00:30:00'),
+(407, 'Perfilado y Fijacion de Cejas', 15000, '00:45:00'),
+(408, 'Maquillaje de dia', 12000, '00:45:00'),
+(409, 'Maquillaje de noche', 15000, '01:00:00'),
+(410, 'Maquillaje Novia', 25000, '01:30:00'),
+(500, 'Manicure Express', 6000, '00:15:00'),
+(501, 'Manicure un color', 8500, '00:30:00'),
+(502, 'Manicure un color y parafina', 12800, '01:00:00'),
+(503, 'Manicure Francesa', 9500, '00:45:00'),
+(504, 'Manicure con diseño', 11000, '01:00:00'),
+(505, 'Manicure Infantil', 4000, '00:15:00'),
+(506, 'Pedicure', 12000, '00:45:00'),
+(507, 'Pedicure y Parafina', 15000, '01:00:00'),
+(508, 'Pedicure Masculina', 10000, '00:45:00'),
+(509, 'Pedicure Masculina y parafina', 15000, '01:00:00'),
+(510, 'Manicure Spa', 11500, '00:45:00'),
+(511, 'Manicure Completa', 9000, '00:45:00'),
+(600, 'Lavado', 3500, '00:30:00'),
+(601, 'Lavado y peinado', 9500, '00:45:00'),
+(602, 'Corte y Lavado Dama', 7000, '01:00:00'),
+(603, 'Corte Varon', 4500, '00:20:00'),
+(604, 'Corte y Lavado varon', 6000, '00:45:00'),
+(605, 'Corte Escolar', 4000, '00:20:00'),
+(606, 'Corte Dama', 5000, '00:30:00'),
+(607, 'Tintura Corta', 17000, '01:30:00'),
+(608, 'Tintura Larga', 20500, '01:30:00'),
+(609, 'Reflejos', 18000, '00:45:00'),
+(610, 'Visos', 19800, '01:00:00'),
+(611, 'Mechas', 19800, '01:00:00'),
+(612, 'Mechas Californianas', 21000, '01:00:00'),
+(613, 'Baño de color', 17000, '01:30:00'),
+(614, 'Peinados Fantasia', 8800, '01:30:00'),
+(615, 'Peinado Novia', 35500, '02:00:00'),
+(616, 'Peinado Brushino', 7000, '00:45:00'),
+(617, 'Peinado y planchado', 10000, '01:00:00'),
+(618, 'Alisado', 7000, '00:45:00'),
+(619, 'Trenzas Simples', 7000, '00:30:00'),
+(620, 'Trenzas Fiesta', 10000, '00:45:00'),
+(621, 'Aplicacion Tintura', 11500, '01:00:00'),
+(622, 'Mechas Fantasia una a una', 3000, '01:30:00'),
+(623, 'Alisado Keratina Corto', 42500, '01:30:00'),
+(624, 'Alisado Keratina medio', 63000, '02:00:00'),
+(625, 'Alisado Keratina Largo', 151000, '02:00:00');
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `atención`
+--
+ALTER TABLE `atención`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `ID_servicio` (`ID_servicio`),
+  ADD KEY `Rut` (`Rut`),
+  ADD KEY `Rut_E` (`Rut_E`);
+
+--
+-- Indices de la tabla `clientes`
+--
+ALTER TABLE `clientes`
+  ADD PRIMARY KEY (`Rut`);
+
+--
+-- Indices de la tabla `compra`
+--
+ALTER TABLE `compra`
+  ADD PRIMARY KEY (`Rut`,`ID_producto`),
+  ADD KEY `ID_producto` (`ID_producto`);
+
+--
+-- Indices de la tabla `empleado`
+--
+ALTER TABLE `empleado`
+  ADD PRIMARY KEY (`Rut`),
+  ADD UNIQUE KEY `especialidad` (`especialidad`);
+
+--
+-- Indices de la tabla `productos`
+--
+ALTER TABLE `productos`
+  ADD PRIMARY KEY (`ID`),
+  ADD KEY `ID_proveedor` (`ID_proveedor`);
+
+--
+-- Indices de la tabla `proveedor`
+--
+ALTER TABLE `proveedor`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Indices de la tabla `servicio`
+--
+ALTER TABLE `servicio`
+  ADD PRIMARY KEY (`ID`);
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `atención`
+--
+ALTER TABLE `atención`
+  ADD CONSTRAINT `atención_ibfk_1` FOREIGN KEY (`ID_servicio`) REFERENCES `servicio` (`ID`),
+  ADD CONSTRAINT `atención_ibfk_2` FOREIGN KEY (`Rut`) REFERENCES `clientes` (`Rut`),
+  ADD CONSTRAINT `atención_ibfk_3` FOREIGN KEY (`Rut_E`) REFERENCES `empleado` (`Rut`);
+
+--
+-- Filtros para la tabla `compra`
+--
+ALTER TABLE `compra`
+  ADD CONSTRAINT `compra_ibfk_1` FOREIGN KEY (`Rut`) REFERENCES `clientes` (`Rut`),
+  ADD CONSTRAINT `compra_ibfk_2` FOREIGN KEY (`ID_producto`) REFERENCES `productos` (`ID`);
+
+--
+-- Filtros para la tabla `productos`
+--
+ALTER TABLE `productos`
+  ADD CONSTRAINT `productos_ibfk_1` FOREIGN KEY (`ID_proveedor`) REFERENCES `proveedor` (`ID`);
+COMMIT;
